@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "transacoes")
@@ -28,5 +29,5 @@ public class Transacao {
     private Conta quemRecebeu;
 
     @NotNull
-    private Instant instante;
+    private LocalDateTime momento;
 }
