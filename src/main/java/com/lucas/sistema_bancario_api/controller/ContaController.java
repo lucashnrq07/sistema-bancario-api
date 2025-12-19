@@ -21,8 +21,8 @@ public class ContaController {
 
     @PostMapping
     @Operation(summary = "Criar uma conta", description = "Usuário cria uma nova conta")
-    public ResponseEntity<Conta> criarConta(CriarContaDTO dto) {
-        Conta conta = this.service.criarConta(new CriarContaDTO(dto.cpf(), dto.primeiroNome(), dto.ultimoNome()));
+    public ResponseEntity<CriarContaDTO> criarConta(CriarContaDTO dto) {
+        CriarContaDTO conta = this.service.criarConta(new CriarContaDTO(dto.cpf(), dto.primeiroNome(), dto.ultimoNome()));
         return ResponseEntity.ok(conta);
     }
 

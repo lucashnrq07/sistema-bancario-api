@@ -14,9 +14,9 @@ public class ContaService {
     @Autowired
     private ContaRepository repository;
 
-    public Conta criarConta(CriarContaDTO dto) {
+    public CriarContaDTO criarConta(CriarContaDTO dto) {
         Conta conta = this.repository.save(new Conta(null, dto.cpf(), dto.primeiroNome(), dto.ultimoNome(), new BigDecimal(0.0)));
-        return conta;
+        return new CriarContaDTO(dto.cpf(), dto.primeiroNome(), dto.ultimoNome());
     }
 
     public BigDecimal consultarSaldo(String cpf) {
