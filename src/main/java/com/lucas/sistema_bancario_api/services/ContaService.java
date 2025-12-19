@@ -2,12 +2,10 @@ package com.lucas.sistema_bancario_api.services;
 
 import com.lucas.sistema_bancario_api.entities.Conta;
 import com.lucas.sistema_bancario_api.repositories.ContaRepository;
-import jakarta.validation.constraints.Min;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.util.Optional;
 
 @Service
 public class ContaService {
@@ -19,11 +17,17 @@ public class ContaService {
         this.repository.save(novaConta);
     }
 
-    public BigDecimal consultarSaldo(Conta consulta) {
-        return consulta.getSaldo();
+    public BigDecimal consultarSaldo(String cpf) throws Exception {
+        try {
+            Conta consulta = buscarContaPorCpf(cpf);
+            return consulta.getSaldo();
+        } catch (Exception e) {
+            throw new Exception("Conta não encontrada");
+        }
     }
 
-    public Conta buscarContaPorCpf(String cpf) {
-        return this.repository.findContaByCpf(cpf).orElseThrow(() -> new IllegalArgumentException("Usuário não encontrado"));
+    public Conta buscarContaPorCpf(String cpf) throws Exception {
+        return repository.findContaByCpf(cpf)
+                .orElseThrow(() -> new Exception("Conta não encontrada"));
     }
 }

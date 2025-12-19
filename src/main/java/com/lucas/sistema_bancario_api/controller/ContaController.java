@@ -23,8 +23,7 @@ public class ContaController {
 
     @GetMapping(path = "/{cpf}")
     public ResponseEntity<BigDecimal> consultarSaldo(@PathVariable String cpf) {
-        Conta conta = service.buscarContaPorCpf(cpf);
-        BigDecimal saldo = this.service.consultarSaldo(conta);
+        BigDecimal saldo = this.service.consultarSaldo(cpf);
         return ResponseEntity.ok().body(saldo);
     }
 }
