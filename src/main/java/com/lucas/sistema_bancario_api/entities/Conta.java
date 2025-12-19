@@ -22,7 +22,7 @@ public class Conta {
     private Long id;
 
     @NotNull
-    @UniqueElements
+    @Column(unique = true)
     private String cpf;
 
     @NotNull

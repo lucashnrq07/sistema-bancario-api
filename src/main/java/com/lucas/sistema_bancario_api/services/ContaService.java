@@ -17,17 +17,17 @@ public class ContaService {
         this.repository.save(novaConta);
     }
 
-    public BigDecimal consultarSaldo(String cpf) throws Exception {
+    public BigDecimal consultarSaldo(String cpf) {
         try {
             Conta consulta = buscarContaPorCpf(cpf);
             return consulta.getSaldo();
         } catch (Exception e) {
-            throw new Exception("Conta não encontrada");
+            throw new IllegalArgumentException("Conta não encontrada");
         }
     }
 
-    public Conta buscarContaPorCpf(String cpf) throws Exception {
+    public Conta buscarContaPorCpf(String cpf) {
         return repository.findContaByCpf(cpf)
-                .orElseThrow(() -> new Exception("Conta não encontrada"));
+                .orElseThrow(() -> new IllegalArgumentException("Conta não encontrada"));
     }
 }
