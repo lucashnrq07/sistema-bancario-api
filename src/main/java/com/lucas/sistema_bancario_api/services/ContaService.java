@@ -23,10 +23,6 @@ public class ContaService {
         return consulta.getSaldo();
     }
 
-    public Conta buscarContaPorId(Long id) {
-        return this.repository.findById(id).orElseThrow(() -> new IllegalArgumentException("Usuário não encontrado"));
-    }
-
     public Conta buscarContaPorCpf(String cpf) {
         return this.repository.findContaByCpf(cpf).orElseThrow(() -> new IllegalArgumentException("Usuário não encontrado"));
     }
