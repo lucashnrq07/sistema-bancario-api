@@ -7,8 +7,6 @@ import java.util.Optional;
 
 public interface ContaRepository extends JpaRepository<Conta, Long> {
 
-    @Override
     Optional<Conta> findById(Long id);
-
     Optional<Conta> findContaByCpf(String cpf);
 }

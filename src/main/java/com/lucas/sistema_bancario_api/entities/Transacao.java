@@ -28,5 +28,5 @@ public class Transacao {
     private Conta quemRecebeu;
 
     @NotNull
-    private Instant instant;
+    private Instant instante;
 }
