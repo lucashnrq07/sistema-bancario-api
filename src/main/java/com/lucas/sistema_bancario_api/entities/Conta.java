@@ -1,5 +1,6 @@
 package com.lucas.sistema_bancario_api.entities;
 
+import com.lucas.sistema_bancario_api.dtos.CriarContaDTO;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
@@ -36,4 +37,10 @@ public class Conta {
 
     @Min(0)
     private BigDecimal saldo;
+
+    public Conta(CriarContaDTO dto) {
+        this.cpf = dto.cpf();
+        this.primeiroNome = dto.primeiroNome();
+        this.ultimoNome = dto.ultimoNome();
+    }
 }
