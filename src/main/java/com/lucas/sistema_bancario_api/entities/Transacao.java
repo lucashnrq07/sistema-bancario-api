@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
+import java.math.BigDecimal;
 import java.time.Instant;
 import java.time.LocalDateTime;
 
@@ -21,16 +22,17 @@ public class Transacao {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "quem_enviou_id")
+    @JoinColumn(name = "quem_enviou_id", nullable = false)
     @NotNull
-    @Column(nullable = false)
     private Conta quemEnviou;
 
     @ManyToOne
-    @JoinColumn(name = "quem_recebeu_id")
+    @JoinColumn(name = "quem_recebeu_id", nullable = false)
     @NotNull
-    @Column(nullable = false)
     private Conta quemRecebeu;
+
+    @NotNull
+    private BigDecimal valor;
 
     @NotNull
     @Column(nullable = false)

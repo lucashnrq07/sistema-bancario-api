@@ -2,6 +2,7 @@ package com.lucas.sistema_bancario_api.services;
 
 import com.lucas.sistema_bancario_api.dtos.*;
 import com.lucas.sistema_bancario_api.entities.Conta;
+import com.lucas.sistema_bancario_api.entities.Transacao;
 import com.lucas.sistema_bancario_api.repositories.TransacaoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,6 +40,10 @@ public class TransacaoService {
         saque(new OperacaoDTO(dto.cpf1(), dto.valor()));
         validarSaldo(new ValidarSaldoDTO(dto.cpf1()));
         deposito(new OperacaoDTO(dto.cpf2(), dto.valor()));
+
+        Conta c1 = this.contaService.buscarContaPorCpf(dto.cpf1());
+        Conta c2 = this.contaService.buscarContaPorCpf(dto.cpf2());
+        this.repository.save(new Transacao(null, c1, c2, dto.valor(), LocalDateTime.now()));
 
         return new TransferenciaRespostaDTO(dto.cpf1(), dto.cpf2(), dto.valor(), LocalDateTime.now());
     }
