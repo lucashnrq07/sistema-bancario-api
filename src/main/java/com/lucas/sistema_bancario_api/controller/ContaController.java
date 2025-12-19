@@ -1,5 +1,6 @@
 package com.lucas.sistema_bancario_api.controller;
 
+import com.lucas.sistema_bancario_api.dtos.CriarContaDTO;
 import com.lucas.sistema_bancario_api.entities.Conta;
 import com.lucas.sistema_bancario_api.services.ContaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,9 +17,9 @@ public class ContaController {
     private ContaService service;
 
     @PostMapping
-    public ResponseEntity<Conta> criarConta(Conta conta) {
-        this.service.criarConta(conta);
-        return ResponseEntity.ok().body(conta);
+    public ResponseEntity<Conta> criarConta(CriarContaDTO dto) {
+        Conta conta = this.service.criarConta(new CriarContaDTO(dto.cpf(), dto.primeiroNome(), dto.ultimoNome()));
+        return ResponseEntity.ok();
     }
 
     @GetMapping(path = "/{cpf}")

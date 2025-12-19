@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
-import org.hibernate.validator.constraints.UniqueElements;
 
 import java.math.BigDecimal;
 
@@ -33,8 +32,4 @@ public class Conta {
 
     @Min(0)
     private BigDecimal saldo;
-
-    public Conta(BigDecimal saldo){
-        this.saldo = saldo;
-    }
 }
