@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 @RestController
 @RequestMapping("/transacoes")
@@ -22,13 +23,13 @@ public class TransacaoController {
 
     @PostMapping(path = "/deposito")
     public ResponseEntity<OperacaoDTO> deposito(OperacaoDTO dto) {
-        OperacaoDTO resposta = this.service.deposito(new OperacaoDTO(dto.cpf(), dto.valor()));
+        OperacaoDTO resposta = this.service.deposito(new OperacaoDTO(dto.cpf(), dto.valor(), LocalDateTime.now()));
         return ResponseEntity.ok().body(resposta);
     }
 
     @PostMapping(path = "/saque")
     public ResponseEntity<OperacaoDTO> saque(OperacaoDTO dto) {
-        OperacaoDTO resposta = this.service.saque(new OperacaoDTO(dto.cpf(), dto.valor()));
+        OperacaoDTO resposta = this.service.saque(new OperacaoDTO(dto.cpf(), dto.valor(), LocalDateTime.now()));
         return ResponseEntity.ok(resposta);
     }
 
