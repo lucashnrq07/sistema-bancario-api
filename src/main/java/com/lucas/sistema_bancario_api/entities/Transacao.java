@@ -22,12 +22,17 @@ public class Transacao {
 
     @ManyToOne
     @JoinColumn(name = "quem_enviou_id")
+    @NotNull
+    @Column(nullable = false)
     private Conta quemEnviou;
 
     @ManyToOne
     @JoinColumn(name = "quem_recebeu_id")
+    @NotNull
+    @Column(nullable = false)
     private Conta quemRecebeu;
 
     @NotNull
+    @Column(nullable = false)
     private LocalDateTime momento;
 }
