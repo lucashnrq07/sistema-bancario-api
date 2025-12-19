@@ -4,10 +4,12 @@ import com.lucas.sistema_bancario_api.entities.Conta;
 import com.lucas.sistema_bancario_api.repositories.ContaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Configuration;
 
 import java.math.BigDecimal;
 import java.util.Arrays;
 
+@Configuration
 public class TestConfig implements CommandLineRunner {
 
     @Autowired
