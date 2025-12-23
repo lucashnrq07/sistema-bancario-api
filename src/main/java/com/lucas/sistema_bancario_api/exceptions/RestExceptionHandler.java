@@ -1,5 +1,6 @@
 package com.lucas.sistema_bancario_api.exceptions;
 
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -22,17 +23,18 @@ public class RestExceptionHandler {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
     }
 
-    @ExceptionHandler(ContaExistenteException.class)
-    public ResponseEntity<ErrorResponse> handleContaExistente(ContaExistenteException ex) {
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<ErrorResponse> handleDataIntegrity(DataIntegrityViolationException ex) {
         ErrorResponse error = new ErrorResponse(
                 LocalDateTime.now(),
                 HttpStatus.CONFLICT.value(),
                 HttpStatus.CONFLICT.name(),
-                ex.getMessage()
+                "Violação de integridade de dados"
         );
 
         return ResponseEntity.status(HttpStatus.CONFLICT).body(error);
     }
+
 
     @ExceptionHandler(SaldoInsuficienteException.class)
     public ResponseEntity<ErrorResponse> handleSaldoInsuficiente(SaldoInsuficienteException ex) {

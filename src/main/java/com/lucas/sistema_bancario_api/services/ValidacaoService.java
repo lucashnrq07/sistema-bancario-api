@@ -4,9 +4,11 @@ import com.lucas.sistema_bancario_api.dtos.ValidarSaldoDTO;
 import com.lucas.sistema_bancario_api.entities.Conta;
 import com.lucas.sistema_bancario_api.exceptions.SaldoInsuficienteException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 
+@Service
 public class ValidacaoService {
 
     @Autowired

@@ -17,12 +17,12 @@ public class ContaService {
     private ContaRepository repository;
 
     public CriarContaDTO criarConta(CriarContaDTO dto) {
-        try {
-            Conta conta = this.repository.save(new Conta(null, dto.cpf(), dto.primeiroNome(), dto.ultimoNome(), new BigDecimal(0.0)));
-            return new CriarContaDTO(dto.cpf(), dto.primeiroNome(), dto.ultimoNome());
-        } catch (ContaExistenteException e) {
+        if (repository.existsByCpf(dto.cpf())) {
             throw new ContaExistenteException("O CPF informado já está cadastrado");
         }
+
+        Conta conta = this.repository.save(new Conta(null, dto.cpf(), dto.primeiroNome(), dto.ultimoNome(), new BigDecimal(0.0)));
+        return new CriarContaDTO(dto.cpf(), dto.primeiroNome(), dto.ultimoNome());
     }
 
     public BigDecimal consultarSaldo(String cpf) {
