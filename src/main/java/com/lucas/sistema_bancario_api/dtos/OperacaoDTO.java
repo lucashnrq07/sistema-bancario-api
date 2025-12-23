@@ -1,6 +1,7 @@
 package com.lucas.sistema_bancario_api.dtos;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 
 import java.math.BigDecimal;
@@ -13,5 +14,6 @@ public record OperacaoDTO(
         String cpf,
 
         @Schema(description = "valor da operação", example = "50.00")
+        @Min(0)
         BigDecimal valor
 ) {}
