@@ -3,6 +3,7 @@ package com.lucas.sistema_bancario_api.services;
 import com.lucas.sistema_bancario_api.dtos.*;
 import com.lucas.sistema_bancario_api.entities.Conta;
 import com.lucas.sistema_bancario_api.entities.Transacao;
+import com.lucas.sistema_bancario_api.exceptions.ValorInvalidoException;
 import com.lucas.sistema_bancario_api.repositories.TransacaoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,6 +26,10 @@ public class TransacaoService {
 
     @Transactional
     public OperacaoRespostaDTO deposito(OperacaoDTO dto) {
+        if (dto.valor().compareTo(BigDecimal.ZERO) <= 0) {
+            throw new ValorInvalidoException("O valor do depósito deve ser maior que zero");
+        }
+
         Conta conta = this.contaService.buscarContaPorCpf(dto.cpf());
 
         conta.setSaldo(conta.getSaldo().add(dto.valor()));
@@ -33,6 +38,10 @@ public class TransacaoService {
 
     @Transactional
     public OperacaoRespostaDTO saque(OperacaoDTO dto) {
+        if (dto.valor().compareTo(BigDecimal.ZERO) <= 0) {
+            throw new ValorInvalidoException("O valor do saque deve ser maior que zero");
+        }
+
         Conta conta = this.contaService.buscarContaPorCpf(dto.cpf());
 
         conta.setSaldo(conta.getSaldo().subtract(dto.valor()));

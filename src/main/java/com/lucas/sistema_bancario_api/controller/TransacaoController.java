@@ -76,9 +76,7 @@ public class TransacaoController {
             @ApiResponse(responseCode = "404", description = "Conta não encontrada"),
             @ApiResponse(responseCode = "400", description = "Saldo insuficiente ou dados inválidos")
     })
-    public ResponseEntity<TransferenciaRespostaDTO> transferencia(
-            @RequestBody TransferenciaDTO dto
-    ) {
+    public ResponseEntity<TransferenciaRespostaDTO> transferencia(@RequestBody @Valid TransferenciaDTO dto) {
         TransferenciaRespostaDTO resposta = service.transferencia(dto);
         return ResponseEntity.ok(resposta);
     }
