@@ -26,6 +26,7 @@ public class TransacaoService {
     @Transactional
     public OperacaoRespostaDTO deposito(OperacaoDTO dto) {
         Conta conta = this.contaService.buscarContaPorCpf(dto.cpf());
+
         conta.setSaldo(conta.getSaldo().add(dto.valor()));
         return new OperacaoRespostaDTO(conta.getCpf(), dto.valor(), LocalDateTime.now());
     }
@@ -33,6 +34,7 @@ public class TransacaoService {
     @Transactional
     public OperacaoRespostaDTO saque(OperacaoDTO dto) {
         Conta conta = this.contaService.buscarContaPorCpf(dto.cpf());
+
         conta.setSaldo(conta.getSaldo().subtract(dto.valor()));
         validacaoService.validarSaldo(new ValidarSaldoDTO(dto.cpf()));
         return new OperacaoRespostaDTO(conta.getCpf(), dto.valor(), LocalDateTime.now());
@@ -41,11 +43,11 @@ public class TransacaoService {
     @Transactional
     public TransferenciaRespostaDTO transferencia(TransferenciaDTO dto) {
         saque(new OperacaoDTO(dto.cpf1(), dto.valor()));
-        validacaoService.validarSaldo(new ValidarSaldoDTO(dto.cpf1()));
         deposito(new OperacaoDTO(dto.cpf2(), dto.valor()));
 
         Conta c1 = this.contaService.buscarContaPorCpf(dto.cpf1());
         Conta c2 = this.contaService.buscarContaPorCpf(dto.cpf2());
+
         this.repository.save(new Transacao(null, c1, c2, dto.valor(), LocalDateTime.now()));
 
         return new TransferenciaRespostaDTO(dto.cpf1(), dto.cpf2(), dto.valor(), LocalDateTime.now());

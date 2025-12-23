@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 @Schema(description = "Dados que devem ser informados para realizar uma operação (saque/depósito)")
 public record OperacaoDTO(
         @NotBlank
-        @Schema(description = "CPF da conta que vai receber a operação", example = "000000000-01")
+        @Schema(description = "CPF da conta que vai realizar a operação", example = "000000000-01")
         String cpf,
 
         @Schema(description = "valor da operação", example = "50.00")
