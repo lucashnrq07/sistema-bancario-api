@@ -2,6 +2,8 @@ package com.lucas.sistema_bancario_api.services;
 
 import com.lucas.sistema_bancario_api.dtos.CriarContaDTO;
 import com.lucas.sistema_bancario_api.entities.Conta;
+import com.lucas.sistema_bancario_api.exceptions.ContaExistenteException;
+import com.lucas.sistema_bancario_api.exceptions.ContaNaoEncontradaException;
 import com.lucas.sistema_bancario_api.repositories.ContaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,8 +17,12 @@ public class ContaService {
     private ContaRepository repository;
 
     public CriarContaDTO criarConta(CriarContaDTO dto) {
-        Conta conta = this.repository.save(new Conta(null, dto.cpf(), dto.primeiroNome(), dto.ultimoNome(), new BigDecimal(0.0)));
-        return new CriarContaDTO(dto.cpf(), dto.primeiroNome(), dto.ultimoNome());
+        try {
+            Conta conta = this.repository.save(new Conta(null, dto.cpf(), dto.primeiroNome(), dto.ultimoNome(), new BigDecimal(0.0)));
+            return new CriarContaDTO(dto.cpf(), dto.primeiroNome(), dto.ultimoNome());
+        } catch (ContaExistenteException e) {
+            throw new ContaExistenteException("O CPF informado já está cadastrado");
+        }
     }
 
     public BigDecimal consultarSaldo(String cpf) {
@@ -24,12 +30,12 @@ public class ContaService {
             Conta consulta = buscarContaPorCpf(cpf);
             return consulta.getSaldo();
         } catch (Exception e) {
-            throw new IllegalArgumentException("Conta não encontrada");
+            throw new ContaNaoEncontradaException("Conta não encontrada");
         }
     }
 
     public Conta buscarContaPorCpf(String cpf) {
         return repository.findContaByCpf(cpf)
-                .orElseThrow(() -> new IllegalArgumentException("Conta não encontrada"));
+                .orElseThrow(() -> new ContaNaoEncontradaException("Conta não encontrada"));
     }
 }
