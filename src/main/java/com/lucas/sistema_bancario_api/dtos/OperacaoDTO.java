@@ -1,11 +1,10 @@
 package com.lucas.sistema_bancario_api.dtos;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Positive;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 
 @Schema(description = "Dados que devem ser informados para realizar uma operação (saque/depósito)")
 public record OperacaoDTO(
@@ -14,6 +13,6 @@ public record OperacaoDTO(
         String cpf,
 
         @Schema(description = "valor da operação", example = "50.00")
-        @Min(0)
+        @Positive
         BigDecimal valor
 ) {}

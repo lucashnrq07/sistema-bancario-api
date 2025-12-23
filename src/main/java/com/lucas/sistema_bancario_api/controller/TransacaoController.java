@@ -11,6 +11,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -37,9 +38,7 @@ public class TransacaoController {
             @ApiResponse(responseCode = "404", description = "Conta não encontrada"),
             @ApiResponse(responseCode = "400", description = "Dados inválidos")
     })
-    public ResponseEntity<OperacaoRespostaDTO> deposito(
-            @RequestBody OperacaoDTO dto
-    ) {
+    public ResponseEntity<OperacaoRespostaDTO> deposito(@RequestBody @Valid OperacaoDTO dto) {
         OperacaoRespostaDTO resposta = service.deposito(dto);
         return ResponseEntity.ok(resposta);
     }
@@ -58,9 +57,7 @@ public class TransacaoController {
             @ApiResponse(responseCode = "404", description = "Conta não encontrada"),
             @ApiResponse(responseCode = "400", description = "Saldo insuficiente")
     })
-    public ResponseEntity<OperacaoRespostaDTO> saque(
-            @RequestBody OperacaoDTO dto
-    ) {
+    public ResponseEntity<OperacaoRespostaDTO> saque(@RequestBody @Valid OperacaoDTO dto) {
         OperacaoRespostaDTO resposta = service.saque(dto);
         return ResponseEntity.ok(resposta);
     }

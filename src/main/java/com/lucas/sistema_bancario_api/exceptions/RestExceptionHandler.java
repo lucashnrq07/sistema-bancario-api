@@ -11,6 +11,18 @@ import java.time.LocalDateTime;
 @RestControllerAdvice
 public class RestExceptionHandler {
 
+    @ExceptionHandler(ContaExistenteException.class)
+    public ResponseEntity<ErrorResponse> handleContaExistente(ContaExistenteException ex) {
+        ErrorResponse error = new ErrorResponse(
+                LocalDateTime.now(),
+                HttpStatus.CONFLICT.value(),
+                HttpStatus.CONFLICT.name(),
+                ex.getMessage()
+        );
+
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(error);
+    }
+
     @ExceptionHandler(ContaNaoEncontradaException.class)
     public ResponseEntity<ErrorResponse> handleContaNaoEncontrada(ContaNaoEncontradaException ex) {
         ErrorResponse error = new ErrorResponse(

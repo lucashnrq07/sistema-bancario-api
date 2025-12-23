@@ -17,7 +17,7 @@ public class ContaService {
     private ContaRepository repository;
 
     public CriarContaDTO criarConta(CriarContaDTO dto) {
-        if (repository.existsByCpf(dto.cpf())) {
+        if (this.repository.existsByCpf(dto.cpf())) {
             throw new ContaExistenteException("O CPF informado já está cadastrado");
         }
 
