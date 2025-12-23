@@ -6,6 +6,8 @@ import com.lucas.sistema_bancario_api.dtos.TransferenciaDTO;
 import com.lucas.sistema_bancario_api.dtos.TransferenciaRespostaDTO;
 import com.lucas.sistema_bancario_api.entities.Conta;
 import com.lucas.sistema_bancario_api.entities.Transacao;
+import com.lucas.sistema_bancario_api.exceptions.SaldoInsuficienteException;
+import com.lucas.sistema_bancario_api.exceptions.ValorInvalidoException;
 import com.lucas.sistema_bancario_api.repositories.TransacaoRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -59,18 +61,20 @@ class TransacaoServiceTest {
     }
 
     @Test
-    @DisplayName("Depósito em conta inexistente")
-    void depositoCaso2() {
-        String cpf = "00000000001";
-        OperacaoDTO dto = new OperacaoDTO(cpf, new BigDecimal("50.00"));
+    @DisplayName("Não deve permitir depósito com valor menor ou igual a zero")
+    void depositoComValorInvalido() {
+        OperacaoDTO dto = new OperacaoDTO(
+                "00000000001",
+                new BigDecimal(-1)
+        );
 
-        when(contaService.buscarContaPorCpf(cpf))
-                .thenThrow(new RuntimeException("Conta não encontrada"));
-
-        assertThrows(RuntimeException.class, () -> {
+        assertThrows(ValorInvalidoException.class, () -> {
             service.deposito(dto);
         });
+
+        verify(contaService, never()).buscarContaPorCpf(any());
     }
+
 
 
     // ========== SAQUE ==========
@@ -101,11 +105,11 @@ class TransacaoServiceTest {
 
         when(this.contaService.buscarContaPorCpf(conta.getCpf())).thenReturn(conta);
 
-        doThrow(IllegalArgumentException.class)
+        doThrow(SaldoInsuficienteException.class)
                 .when(validacaoService)
                 .validarSaldo(any());
 
-        assertThrows(IllegalArgumentException.class, () -> {
+        assertThrows(SaldoInsuficienteException.class, () -> {
             service.saque(dto);
         });
     }
@@ -147,11 +151,11 @@ class TransacaoServiceTest {
                 .thenReturn(c1);
         when(contaService.buscarContaPorCpf(c2.getCpf()))
                 .thenReturn(c2);
-        doThrow(IllegalArgumentException.class)
+        doThrow(SaldoInsuficienteException.class)
                 .when(validacaoService)
                 .validarSaldo(any());
 
-        assertThrows(IllegalArgumentException.class, () -> {
+        assertThrows(SaldoInsuficienteException.class, () -> {
             service.transferencia(dto);
         });
 

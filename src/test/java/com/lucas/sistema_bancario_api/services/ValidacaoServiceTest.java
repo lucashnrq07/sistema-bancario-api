@@ -2,6 +2,7 @@ package com.lucas.sistema_bancario_api.services;
 
 import com.lucas.sistema_bancario_api.dtos.ValidarSaldoDTO;
 import com.lucas.sistema_bancario_api.entities.Conta;
+import com.lucas.sistema_bancario_api.exceptions.SaldoInsuficienteException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -52,7 +53,7 @@ class ValidacaoServiceTest {
         when(contaService.buscarContaPorCpf(cpf))
                 .thenReturn(conta);
 
-        assertThrows(IllegalArgumentException.class, () -> {
+        assertThrows(SaldoInsuficienteException.class, () -> {
             service.validarSaldo(new ValidarSaldoDTO(cpf));
         });
     }

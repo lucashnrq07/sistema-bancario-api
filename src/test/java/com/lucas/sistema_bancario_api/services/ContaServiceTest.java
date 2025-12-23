@@ -2,6 +2,8 @@ package com.lucas.sistema_bancario_api.services;
 
 import com.lucas.sistema_bancario_api.dtos.CriarContaDTO;
 import com.lucas.sistema_bancario_api.entities.Conta;
+import com.lucas.sistema_bancario_api.exceptions.ContaExistenteException;
+import com.lucas.sistema_bancario_api.exceptions.ContaNaoEncontradaException;
 import com.lucas.sistema_bancario_api.repositories.ContaRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -49,9 +51,9 @@ class ContaServiceTest {
         CriarContaDTO novaConta = new CriarContaDTO("00000000001", "Lucas", "Silva");
 
         when(repository.save(any()))
-                .thenThrow(new DataIntegrityViolationException("CPF já cadastrado"));
+                .thenThrow(new ContaExistenteException("CPF já cadastrado"));
 
-        assertThrows(DataIntegrityViolationException.class, () -> {
+        assertThrows(ContaExistenteException.class, () -> {
             service.criarConta(novaConta);
         });
     }
@@ -78,7 +80,7 @@ class ContaServiceTest {
         when(repository.findContaByCpf("00000000001"))
                 .thenReturn(Optional.empty());
 
-        assertThrows(IllegalArgumentException.class, () -> {
+        assertThrows(ContaNaoEncontradaException.class, () -> {
             service.consultarSaldo("00000000001");
         });
     }
@@ -107,7 +109,7 @@ class ContaServiceTest {
         when(repository.findContaByCpf("00000000001"))
                 .thenReturn(Optional.empty());
 
-        assertThrows(IllegalArgumentException.class, () -> {
+        assertThrows(ContaNaoEncontradaException.class, () -> {
             service.buscarContaPorCpf("00000000001");
         });
     }
