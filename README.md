@@ -3,6 +3,40 @@
 API REST desenvolvida em **Java com Spring Boot** para simular operações básicas de um sistema bancário, como **criação de contas**, **depósitos**, **saques**, **transferências** e **consulta de saldo**, com foco em **boas práticas de arquitetura**, **validação**, **tratamento de exceções** e **testes unitários**.
 
 ---
+## O que eu aprendi com este projeto
+
+###  Modelagem de Domínio
+- Representação de entidades do sistema bancário
+- Consistência e integridade dos dados
+
+###  Regras de Negócio
+- Validações críticas (saldo, valores, CPF)
+- Centralização da lógica na camada de serviço
+
+###  Arquitetura em Camadas
+- Separação entre Controller, Service, Repository e DTOs
+- Código organizado e de fácil manutenção
+
+###  APIs REST
+- Criação de endpoints REST seguindo boas práticas
+- Uso correto dos métodos HTTP
+- Documentação com Swagger
+
+###  Tratamento de Exceções
+- Criação de exceções personalizadas
+- Tratamento global de erros com @RestControllerAdvice
+
+###  Testes Unitários
+- Testes da camada de serviço
+- Cobertura de cenários de sucesso e erro
+- Uso de JUnit 5 e Mockito
+
+###  Boas Práticas de Desenvolvimento
+- Código limpo e legível
+- Validações com Bean Validation
+- Versionamento com Git
+
+---
 
 ## Funcionalidades
 
